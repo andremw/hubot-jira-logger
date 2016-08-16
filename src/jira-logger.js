@@ -10,25 +10,34 @@
 //  hubot add-user <username> password <password> - Adds JIRA user to Android 18's database.
 
 'use strict';
-const crypto = require('crypto');
 
 const JIRA_API_URL = process.env.HUBOT_JIRA_API_URL;
 const JIRA_PROJECT_TOKEN = process.env.HUBOT_JIRA_PROJECT_TOKEN;
 
-module.exports = robot => {
-  function encryptText(text, secret) {
-    const cipher = crypto.createCipher('aes-256-ctr', secret);
-    let crypted = cipher.update(text, 'utf8', 'hex');
-    crypted += cipher.final('hex');
-    return crypted;
-  }
+const crypto = require('./crypto');
 
-  function decryptText(text, secret) {
-    const decipher = crypto.createDecipher('aes-256-ctr', secret);
-    let dec = decipher.update(text, 'hex', 'utf8');
-    dec += decipher.final('utf8');
-    return dec;
-  }
+module.exports = robot => {
+  robot.respond(/log (.+) on ([^\s]+)(.*)?/i, response => {
+    const hubotUserID = response.message.user.id;
+    const encryptedUserpass = robot.brain.get(hubotUserID);
+
+    if (!encryptedUserpass) {
+      response.send('You have ABSOLUTELY no credentials! Please add them with: add-user <username> password <password>');
+      return;
+    }
+
+    const config = {
+      time: response.match[1],
+      jiraNumber: response.match[2],
+      comment: response.match[3],
+      projectToken: JIRA_PROJECT_TOKEN,
+      userpass: crypto.decryptText(encryptedUserpass, hubotUserID)
+    };
+
+    logHours(config)
+        .then(successMessage => response.send(successMessage))
+        .catch(err => response.send(err));
+  });
 
   function logHours(config) {
     const worklog = {
@@ -60,28 +69,6 @@ module.exports = robot => {
     });
   }
 
-  robot.respond(/log (.+) on ([^\s]+)(.*)?/i, response => {
-    const hubotUserID = response.message.user.id;
-    const encryptedUserpass = robot.brain.get(hubotUserID);
-
-    if (!encryptedUserpass) {
-      response.send('You have ABSOLUTELY no credentials! Please add them with: add-user <username> password <password>');
-      return;
-    }
-
-    const config = {
-      time: response.match[1],
-      jiraNumber: response.match[2],
-      comment: response.match[3],
-      projectToken: JIRA_PROJECT_TOKEN,
-      userpass: decryptText(encryptedUserpass, hubotUserID)
-    };
-
-    logHours(config)
-        .then(successMessage => response.send(successMessage))
-        .catch(err => response.send(err));
-  });
-
   robot.respond(/add-user (.+) password (.[^\s]+)/, response => {
     const username = response.match[1];
     const password = response.match[2];
@@ -96,7 +83,7 @@ module.exports = robot => {
 
     try {
       const userpassBase64 = new Buffer(`${username}':'${password}`).toString('base64');
-      const encryptedUserpass = encryptText(userpassBase64, hubotUserID);
+      const encryptedUserpass = crypto.encryptText(userpassBase64, hubotUserID);
 
       robot.brain.set(hubotUserID, encryptedUserpass);
 
