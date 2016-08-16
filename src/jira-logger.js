@@ -17,7 +17,7 @@ const JIRA_PROJECT_TOKEN = process.env.HUBOT_JIRA_PROJECT_TOKEN;
 const crypto = require('./crypto');
 
 module.exports = robot => {
-  robot.respond(/add-user (.+) password (.[^\s]+)/, response => {
+  robot.respond(/auth (.+)\s(.[^\s]+)/, response => {
     authenticate(robot, response);
   });
 
