@@ -35,8 +35,8 @@ module.exports = robot => {
     };
 
     logHours(config)
-        .then(successMessage => response.send(successMessage))
-        .catch(err => response.send(err));
+      .then(successMessage => response.send(successMessage))
+      .catch(err => response.send(err));
   });
 
   function logHours(config) {
@@ -69,7 +69,7 @@ module.exports = robot => {
     });
   }
 
-  robot.respond(/add-user (.+) password (.[^\s]+)/, response => {
+  robot.respond(/auth (.[^\s]+) (.[^\s]+)/i, response => {
     const username = response.match[1];
     const password = response.match[2];
     // try getting unique trait from slack user, in this case: Slack ID
