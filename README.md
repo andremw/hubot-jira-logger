@@ -41,6 +41,7 @@ hubot>> Yay! You logged <hours> on <task>
 ## Checklist
 - [x] Find a way to add users to hubot
 - [x] Create command to log hours
+- [ ] Modularize initial script code
 - [ ] Add possibility of including comments to hour logs
 - [ ] Create command to move task status
 - [ ] Create command to assign task to other people
