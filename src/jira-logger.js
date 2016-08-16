@@ -6,8 +6,8 @@
 //   JIRA_API_URL - JIRA API Url, it needs to be added in, or else requests won't work properly.
 //
 // Commands:
+//  hubot auth <username> <password> - Authenticate on JIRA to be able to log work.
 //  hubot log <hours> on <task> - Logs hours on JIRA.
-//  hubot add-user <username> password <password> - Adds JIRA user to Android 18's database.
 
 'use strict';
 
@@ -22,7 +22,7 @@ module.exports = robot => {
     const encryptedUserpass = robot.brain.get(hubotUserID);
 
     if (!encryptedUserpass) {
-      response.send('You have ABSOLUTELY no credentials! Please add them with: add-user <username> password <password>');
+      response.send('You have ABSOLUTELY no credentials! Please add them with: auth <username> <password>');
       return;
     }
 
