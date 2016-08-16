@@ -22,13 +22,13 @@ Then add **hubot-jira-logger** to your `external-scripts.json`:
 
 Privately, user1 sends a message to hubot.
 ```
-user1>> hubot add-user <user1.email> password <password>
+user1>> hubot auth <user1.email> <password>
 hubot>> Your user was successfully added to my database.
 ```
 
 If another user2 tries to add in credentials for other people.
 ```
-user2>> hubot add-user <user1.email> password <password>
+user2>> hubot auth <user1.email> <password>
 hubot>> Stop trying to use other people\'s usernames, bro!
 ```
 
