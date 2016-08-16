@@ -5,11 +5,11 @@
   "author": " <>",
   "license": "MIT",
 
-  "keywords": "jira",
+  "keywords": "hubot, hubot-scripts, jira, chatbot",
 
   "repository": {
     "type": "git",
-    "url": "git://github.com/hubot-scripts/hubot-jira-logger.git"
+    "url": "git://github.com/andremw/hubot-jira-logger.git"
   },
 
   "bugs": {
@@ -36,7 +36,14 @@
     "matchdep": "~0.3.0",
     "mocha": "^2.1.0",
     "sinon": "^1.13.0",
-    "sinon-chai": "^2.7.0"
+    "sinon-chai": "^2.7.0",
+    "xo": "^0.16.0"
+  },
+
+  "xo": {
+    "semicolon": true,
+    "esnext": true,
+    "space": 2
   },
 
   "main": "index.coffee",
