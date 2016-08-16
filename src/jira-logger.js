@@ -2,8 +2,8 @@
 //   Hubot script for logging hours on Jira.
 //
 // Configuration:
-//   JIRA_PROJECT_TOKEN - Access Token for JIRA API Requests.
-//   JIRA_API_URL - JIRA API Url, it needs to be added in, or else requests won't work properly.
+//   HUBOT_JIRA_PROJECT_TOKEN - Access Token for JIRA API Requests.
+//   HUBOT_JIRA_API_URL - JIRA API Url, it needs to be added in, or else requests won't work properly.
 //
 // Commands:
 //  hubot log <hours> on <task> - Logs hours on JIRA.
