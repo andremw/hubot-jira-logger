@@ -75,7 +75,7 @@ function sendLog(robot, config) {
           reject(`Bad request.`);
         }
 
-        if (res.status === 401) {
+        if (res.statusCode === 401) {
           reject('Unauthorized. Check if your credentials are correct and try again.');
         }
 
