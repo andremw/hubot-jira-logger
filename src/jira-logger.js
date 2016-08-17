@@ -54,8 +54,6 @@ function logWork(robot, response) {
 }
 
 function sendLog(robot, config) {
-  const logger = robot.logger;
-
   const worklog = {
     comment: config.comment,
     timeSpent: config.time
@@ -64,20 +62,17 @@ function sendLog(robot, config) {
   const url = `${JIRA_API_URL}/issue/${config.jiraNumber}/worklog`;
 
   return new Promise((resolve, reject) => {
-    logger.info(`Requesting ${url}\nAuthorization: ${config.userpass}\napp_token: ${config.projectToken}`);
     robot.http(url, {rejectUnauthorized: false, muteHttpExceptions: false})
       .header('Content-Type', 'application/json')
       .header('Authorization', `Basic ${config.userpass}`)
       .header('app_token', config.projectToken)
       .post(JSON.stringify(worklog))((err, res) => {
-        logger.info(`Response!\nErr: ${err}\nStatus Code: ${res.statusCode}\nStatus Message: ${res.statusMessage}\n`);
-
         if (err) {
           reject(`Got error: ${err}`);
         }
 
         if (res.statusCode === 400) {
-          reject(`Bad request.`);
+          reject(`Bad request. Check if your work log follows this pattern: [hour] [minutes] (with spaces between hour and minutes)`);
         }
 
         if (res.statusCode === 401) {
