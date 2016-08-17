@@ -63,7 +63,7 @@ function sendLog(robot, config) {
       .header('app_token', config.projectToken)
       .post(JSON.stringify(worklog))((err, res) => {
         if (err) {
-          reject(err);
+          reject(`Got error: ${err}`);
         }
         if (res.statusCode === 400) {
           reject(`Bad request.`);
@@ -98,6 +98,6 @@ function authenticate(robot, response) {
 
     response.send('Your user was successfully added to my database.');
   } catch (err) {
-    response.send(err);
+    response.send(`Couldn't authenticate: ${err}`);
   }
 }
