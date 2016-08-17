@@ -31,7 +31,7 @@ function logWork(robot, response) {
   const encryptedUserpass = robot.brain.get(hubotUserID);
 
   if (!encryptedUserpass) {
-    response.send('You have ABSOLUTELY no credentials! Please add them with: add-user <username> password <password>');
+    response.send(`Couldn't find your credentials. Add them running the command _auth <username> <password>_ and try again.`);
     return;
   }
 
@@ -63,17 +63,17 @@ function sendLog(robot, config) {
       .header('app_token', config.projectToken)
       .post(JSON.stringify(worklog))((err, res) => {
         if (err) {
-          reject(err);
+          reject(`Got error: ${err}`);
         }
         if (res.statusCode === 400) {
-          reject('I received a Bad Request from JIRA. :|');
+          reject(`Bad request.`);
         }
 
         if (res.status === 401) {
-          reject('Your password is definitely wrong. Change it.');
+          reject('Unauthorized. Check if your credentials are correct and try again.');
         }
 
-        resolve(`Yay! You logged ${config.time} on ${config.jiraNumber}`);
+        resolve(`Logged ${config.time} on ${config.jiraNumber}.`);
       });
   });
 }
@@ -86,7 +86,7 @@ function authenticate(robot, response) {
   const hubotUserID = response.message.user.id;
 
   if (response.message.user.profile.email !== username) {
-    response.send('Stop trying to use other people\'s usernames, bro!');
+    response.send(`${username} is not your username. You can only log work with your username.`);
     return;
   }
 
@@ -98,6 +98,6 @@ function authenticate(robot, response) {
 
     response.send('Your user was successfully added to my database.');
   } catch (err) {
-    response.send(err);
+    response.send(`Couldn't authenticate: ${err}`);
   }
 }
