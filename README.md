@@ -29,13 +29,15 @@ hubot>> Your user was successfully added to my database.
 If another user2 tries to add in credentials for other people.
 ```
 user2>> hubot auth <user1.email> <password>
-hubot>> Stop trying to use other people\'s usernames, bro!
+hubot>> <user1.email> is not your username. You can only log work with your username.
 ```
+
+_It's important to notice that currently, the verification between different users is made by e-mail. So the Jira Account e-mail must match the Slack Account e-mail in order to add credentials._
 
 Logging hours on JIRA.
 ```
-user1>> hubot log <hours> on <task>
-hubot>> Yay! You logged <hours> on <task>
+user1>> hubot log <time> on <task> <optional-comment>
+hubot>> Logged <time> on <task>.
 ```
 
 ## NPM Module

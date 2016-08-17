@@ -17,6 +17,11 @@ const JIRA_PROJECT_TOKEN = process.env.HUBOT_JIRA_PROJECT_TOKEN;
 const crypto = require('./crypto');
 
 module.exports = robot => {
+  if (!JIRA_API_URL || !JIRA_PROJECT_TOKEN) {
+    robot.logger.error(`Please make sure the required environment variables are all set.`);
+    throw new Error(`Please make sure the required environment variables are all set.`);
+  }
+
   robot.respond(/auth (.+)\s(.[^\s]+)/, response => {
     authenticate(robot, response);
   });
@@ -65,11 +70,12 @@ function sendLog(robot, config) {
         if (err) {
           reject(`Got error: ${err}`);
         }
+
         if (res.statusCode === 400) {
-          reject(`Bad request.`);
+          reject(`Bad request. Check if your work log follows this pattern: [hour] [minutes] (with spaces between hour and minutes)`);
         }
 
-        if (res.status === 401) {
+        if (res.statusCode === 401) {
           reject('Unauthorized. Check if your credentials are correct and try again.');
         }
 
@@ -91,7 +97,7 @@ function authenticate(robot, response) {
   }
 
   try {
-    const userpassBase64 = new Buffer(`${username}':'${password}`).toString('base64');
+    const userpassBase64 = new Buffer(`${username}:${password}`).toString('base64');
     const encryptedUserpass = crypto.encryptText(userpassBase64, hubotUserID);
 
     robot.brain.set(hubotUserID, encryptedUserpass);
