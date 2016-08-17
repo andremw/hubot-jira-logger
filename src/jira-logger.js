@@ -64,13 +64,14 @@ function sendLog(robot, config) {
   const url = `${JIRA_API_URL}/issue/${config.jiraNumber}/worklog`;
 
   return new Promise((resolve, reject) => {
-    logger.info(`Requesting ${url}. Authorization: ${config.userpass}. app_token: ${config.projectToken}`);
+    logger.info(`Requesting ${url}\nAuthorization: ${config.userpass}\napp_token: ${config.projectToken}`);
     robot.http(url, {rejectUnauthorized: false, muteHttpExceptions: false})
       .header('Content-Type', 'application/json')
       .header('Authorization', `Basic ${config.userpass}`)
       .header('app_token', config.projectToken)
       .post(JSON.stringify(worklog))((err, res) => {
-        logger.info(`Response!\nErr: ${err}\nStatus Code: ${res.statusCode}`);
+        logger.info(`Response!\nErr: ${err}\nStatus Code: ${res.statusCode}\nStatus Message: ${res.statusMessage}\n`);
+
         if (err) {
           reject(`Got error: ${err}`);
         }
