@@ -7,7 +7,7 @@
 //
 // Commands:
 //  hubot auth <username> <password> - Authenticate on JIRA to be able to log work.
-//  hubot log <hours> on <task> - Logs hours on JIRA.
+//  hubot log <hours> on <task> [comments] - Logs hours on a JIRA task, passing comments if necessary.
 
 'use strict';
 

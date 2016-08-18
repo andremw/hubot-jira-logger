@@ -36,7 +36,7 @@ _It's important to notice that currently, the verification between different use
 
 Logging hours on JIRA.
 ```
-user1>> hubot log <time> on <task> <optional-comment>
+user1>> hubot log <time> on <task> [optional-comment]
 hubot>> Logged <time> on <task>.
 ```
 
