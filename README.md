@@ -2,7 +2,9 @@
 
 Hubot script for logging hours on Jira.
 
-See [`src/jira-logger.coffee`](src/jira-logger.coffee) for full documentation.
+See [`src/jira-logger.js`](src/jira-logger.js) for full documentation.
+
+If you don't know what [Hubot](https://hubot.github.com/) is check out [this nice introduction](https://www.youtube.com/watch?v=SA1h34ESWqQ) by the guys who created it. To summarize, it's a chat bot that you can use to automate some work for you. Is normally used for what people are calling "ChatOps".
 
 ## Installation
 
