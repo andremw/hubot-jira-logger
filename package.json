@@ -1,7 +1,7 @@
 {
   "name": "hubot-jira-logger",
   "description": "Hubot script for logging hours on Jira.",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "author": " <>",
   "license": "MIT",
 
