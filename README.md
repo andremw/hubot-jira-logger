@@ -40,6 +40,8 @@ user1>> hubot log <time> on <task> [optional-comment]
 hubot>> Logged <time> on <task>.
 ```
 
+**Always prefer to use these two commands in a private chat with the bot, otherwise people will see your credentials when you use the auth command. Be careful!**
+
 ## NPM Module
 
 https://www.npmjs.com/package/hubot-jira-logger
