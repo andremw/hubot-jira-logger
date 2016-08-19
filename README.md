@@ -20,6 +20,10 @@ Then add **hubot-jira-logger** to your `external-scripts.json`:
 ]
 ```
 
+You will also need to set two environment variables:
+* HUBOT_JIRA_PROJECT_TOKEN - Access Token for JIRA API Requests.
+* HUBOT_JIRA_API_URL - The domain URL for you jira instance.
+
 ## Sample Interaction
 
 Privately, user1 sends a message to hubot.
